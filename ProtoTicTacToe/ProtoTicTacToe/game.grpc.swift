@@ -31,9 +31,9 @@ internal protocol SpeedTacToeClientProtocol: GRPCClient {
   var interceptors: SpeedTacToeClientInterceptorFactoryProtocol? { get }
 
   func findGame(
-    _ request: SwiftProtobuf.Google_Protobuf_Empty,
+    _ request: GameSearchHandshake,
     callOptions: CallOptions?
-  ) -> UnaryCall<SwiftProtobuf.Google_Protobuf_Empty, GameFoundHandshake>
+  ) -> UnaryCall<GameSearchHandshake, GameFoundHandshake>
 
   func connect(
     callOptions: CallOptions?,
@@ -53,9 +53,9 @@ extension SpeedTacToeClientProtocol {
   ///   - callOptions: Call options.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
   internal func findGame(
-    _ request: SwiftProtobuf.Google_Protobuf_Empty,
+    _ request: GameSearchHandshake,
     callOptions: CallOptions? = nil
-  ) -> UnaryCall<SwiftProtobuf.Google_Protobuf_Empty, GameFoundHandshake> {
+  ) -> UnaryCall<GameSearchHandshake, GameFoundHandshake> {
     return self.makeUnaryCall(
       path: "/SpeedTacToe/FindGame",
       request: request,
@@ -89,7 +89,7 @@ extension SpeedTacToeClientProtocol {
 internal protocol SpeedTacToeClientInterceptorFactoryProtocol {
 
   /// - Returns: Interceptors to use when invoking 'findGame'.
-  func makeFindGameInterceptors() -> [ClientInterceptor<SwiftProtobuf.Google_Protobuf_Empty, GameFoundHandshake>]
+  func makeFindGameInterceptors() -> [ClientInterceptor<GameSearchHandshake, GameFoundHandshake>]
 
   /// - Returns: Interceptors to use when invoking 'connect'.
   func makeConnectInterceptors() -> [ClientInterceptor<Move, GameState>]

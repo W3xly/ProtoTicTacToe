@@ -40,7 +40,6 @@ struct GameView: View {
                 }
                 .disabled(false)
 
-
                 Spacer()
             }
             .alert(item: $viewModel.alertItem) { alertItem in

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B2DAED32852164C00831CCA /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2DAED22852164C00831CCA /* GameModel.swift */; };
+		8B2DAED5285216CE00831CCA /* GameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2DAED4285216CE00831CCA /* GameService.swift */; };
 		B4D774772851E708006E2C1A /* ProtoTicTacToeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D774762851E708006E2C1A /* ProtoTicTacToeApp.swift */; };
 		B4D7747B2851E709006E2C1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4D7747A2851E709006E2C1A /* Assets.xcassets */; };
 		B4D7747E2851E709006E2C1A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4D7747D2851E709006E2C1A /* Preview Assets.xcassets */; };
@@ -28,6 +30,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8B2DAED22852164C00831CCA /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
+		8B2DAED4285216CE00831CCA /* GameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameService.swift; sourceTree = "<group>"; };
 		B4D774732851E708006E2C1A /* ProtoTicTacToe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProtoTicTacToe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4D774762851E708006E2C1A /* ProtoTicTacToeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtoTicTacToeApp.swift; sourceTree = "<group>"; };
 		B4D7747A2851E709006E2C1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -120,6 +124,8 @@
 				B4D774972851E784006E2C1A /* GameNotifications.swift */,
 				B4D774982851E784006E2C1A /* User.swift */,
 				B4D774992851E784006E2C1A /* AlertItem.swift */,
+				8B2DAED4285216CE00831CCA /* GameService.swift */,
+				8B2DAED22852164C00831CCA /* GameModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -205,7 +211,9 @@
 				B4D774AC2851F91C006E2C1A /* game.proto in Sources */,
 				B4D774932851E764006E2C1A /* GameSquareView.swift in Sources */,
 				B4D774852851E742006E2C1A /* HomeView.swift in Sources */,
+				8B2DAED32852164C00831CCA /* GameModel.swift in Sources */,
 				B4D774922851E764006E2C1A /* PlayerIndicatorView.swift in Sources */,
+				8B2DAED5285216CE00831CCA /* GameService.swift in Sources */,
 				B4D774942851E764006E2C1A /* LoadingView.swift in Sources */,
 				B4D774912851E764006E2C1A /* GameButton.swift in Sources */,
 				B4D7749D2851E784006E2C1A /* AlertItem.swift in Sources */,

@@ -11,6 +11,8 @@ import GRPC
 import SwiftProtobuf
 import NIO
 
+let clientUuid = UUID()
+
 final class GameViewModel: ObservableObject {
 
     let columns: [GridItem] = [GridItem(.flexible(), spacing: 0),
@@ -22,8 +24,7 @@ final class GameViewModel: ObservableObject {
     @Published var alertItem: AlertItem?
     @Published var gameNotification = GameNotification.waitingForPlayer
 
-    @Published var handShake = GameFoundHandshake()
-    @Published var gameState = GameState()
+    private let gameService: GameService
 
     private let group: EventLoopGroup
     private let client: SpeedTacToeClient
@@ -32,25 +33,20 @@ final class GameViewModel: ObservableObject {
     init() {
         group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
         let connection = ClientConnection.insecure(group: group)
-            .connect(host: "127.0.0.1:50051", port: 8080)
+            .withCallStartBehavior(.fastFailure)
+            .withKeepalive(.init(timeout: .hours(1)))
+            .connect(host: "2.tcp.eu.ngrok.io", port: 12377)
         client = SpeedTacToeClient(channel: connection)
+
+        gameService = GameService(client: client)
     }
 
     func findGame() {
-        let call = client.findGame(Google_Protobuf_Empty())
-
-        Future<GameFoundHandshake, Never> { completion in
-            do {
-                let response = try call.response.wait()
-                completion(.success(response))
-            } catch {
-                print("Error")
-            }
+        Task {
+            print("finding game as client \(clientUuid.uuidString)")
+            let gameModel = try await gameService.findGame(clientUuid: clientUuid)
+            print(gameModel.debugDescription)
         }
-        .map { $0 }
-        .subscribe(on: DispatchQueue.global(qos: .userInitiated))
-        .receive(on: DispatchQueue.main)
-        .assign(to: &$handShake)
     }
 
     func connect() {

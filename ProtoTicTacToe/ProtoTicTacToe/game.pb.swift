@@ -60,6 +60,18 @@ extension Symbol: CaseIterable {
 
 #endif  // swift(>=4.2)
 
+struct GameSearchHandshake {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var clientUuid: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 struct GameFoundHandshake {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -89,6 +101,8 @@ struct Move {
   var hasPosition: Bool {return self._position != nil}
   /// Clears the value of `position`. Subsequent reads from it will return its default value.
   mutating func clearPosition() {self._position = nil}
+
+  var clientUuid: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -287,6 +301,7 @@ struct Board {
 
 #if swift(>=5.5) && canImport(_Concurrency)
 extension Symbol: @unchecked Sendable {}
+extension GameSearchHandshake: @unchecked Sendable {}
 extension GameFoundHandshake: @unchecked Sendable {}
 extension Move: @unchecked Sendable {}
 extension Position: @unchecked Sendable {}
@@ -306,6 +321,38 @@ extension Symbol: SwiftProtobuf._ProtoNameProviding {
     0: .same(proto: "CIRCLE"),
     1: .same(proto: "CROSS"),
   ]
+}
+
+extension GameSearchHandshake: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GameSearchHandshake"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "clientUuid"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.clientUuid) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.clientUuid.isEmpty {
+      try visitor.visitSingularStringField(value: self.clientUuid, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: GameSearchHandshake, rhs: GameSearchHandshake) -> Bool {
+    if lhs.clientUuid != rhs.clientUuid {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
 }
 
 extension GameFoundHandshake: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
@@ -351,6 +398,7 @@ extension Move: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "gameUuid"),
     2: .same(proto: "position"),
+    3: .same(proto: "clientUuid"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -361,6 +409,7 @@ extension Move: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.gameUuid) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._position) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.clientUuid) }()
       default: break
       }
     }
@@ -377,12 +426,16 @@ extension Move: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase,
     try { if let v = self._position {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
+    if !self.clientUuid.isEmpty {
+      try visitor.visitSingularStringField(value: self.clientUuid, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Move, rhs: Move) -> Bool {
     if lhs.gameUuid != rhs.gameUuid {return false}
     if lhs._position != rhs._position {return false}
+    if lhs.clientUuid != rhs.clientUuid {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
